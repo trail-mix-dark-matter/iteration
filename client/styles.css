@@ -1,0 +1,153 @@
+.appContainer {
+    position: relative;
+    z-index: 1;
+}
+
+.mainContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.logo {
+    width: 20%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#map-display {
+    z-index: 1;
+}
+
+.list {
+    display: flex;
+}
+
+.evens {
+    display: flex;
+    background-color: rgb(122, 185, 119);
+}
+
+.odds {
+    display: flex;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+}
+
+.column p {
+    font-family: 'Arial';
+    font-weight: 550;
+}
+
+.left {
+    width: 40%;
+}
+
+.middle, .right {
+    width: 30%;
+}
+  
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.length {
+    margin-left: 100px;
+}
+
+.difficulty {
+    margin-left: 50px;
+}
+
+.popup {
+    margin: 0;
+    padding: 0;
+}
+
+.popup-name {
+    margin: 0;
+    padding: 0;
+}
+
+.popup-summary {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.popup-difficulty {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+#commentForm {
+    width: 50%;
+    height: 100px;
+    border-radius: 5px;
+    padding-top: 0;
+    padding-left: 0;
+}
+
+#authorForm {
+    border-radius: 5px;
+    padding-top: 0;
+    padding-left: 0;
+}
+
+.modalGuts {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    overflow: auto;
+    background-color: #ffe4cb;
+    text-align: center;
+    border: 2px solid rgb(122, 185, 119);
+    border-radius: 10px;
+    z-index: 9999;
+    font-family: 'Arial';
+    font-weight: 250;
+}
+
+#trailName {
+    font-size: 24px;
+}
+
+#trailImage {
+    border: 2px solid rgb(122, 185, 119);
+    border-radius: 10px;
+    text-align: center;
+    z-index: 2;
+}
+
+#diff-key {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 30%;
+    overflow: auto;
+    background-color: #ffe4cb;
+    text-align: center;
+    border: 2px solid darkgreen;
+    border-radius: 5px;
+    z-index: 2;
+}
