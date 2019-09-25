@@ -23,6 +23,7 @@ class MainContainer extends Component {
                     this.props.noTrail();
                 }
             }}>
+            
                 <img src="../../assets/trail-mix-logo-small.jpg" className='logo'/><br />
                 <MapDisplay 
                 id="map-display"

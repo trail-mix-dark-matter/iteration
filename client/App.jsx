@@ -29,17 +29,52 @@ class App extends Component {
     this.postComment = this.postComment.bind(this);
     this.displayTrail = this.displayTrail.bind(this);
     this.showKey = this.showKey.bind(this);
-    this.getClientBrowserLocation = this.getClientBrowserLocation.bind(this);
-    this.handleErrorGettingBrowserLocation = this.handleErrorGettingBrowserLocation.bind(
-      this
-    );
   }
 
   //fetches data from REI API and sets to state when the page loads
   componentDidMount() {
+
+     // OBTAINING CLIENT'S BROWSER LOCATION
+    function getClientBrowserLocation(position) {
+        const { latitude, longitude } = position.coords;
+        const latlon = { latitude, longitude };
+        console.log('longitude: ', longitude);
+        console.log('latitude: ', latitude);
+        // modify THIS ROUTE depending on backend
+        fetch('/data', {
+        method: 'POST',
+        body: JSON.stringify(latlon),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json.trails);
+            this.setState({ trailData: json.trails });
+        })
+        .catch(e => console.error('unable to post', e));
+    }
+
+    function handleErrorGettingBrowserLocation() {
+        const latlon = { latitude: 34.383966, longitude: -118.537239 };
+        fetch('/data', {
+          method: 'POST',
+          body: JSON.stringify(latlon),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => res.json())
+          .then(json => {
+            this.setState({ trailData: json.trails });
+          })
+          .catch(e => console.error('unable to post', e));
+      }
+
     navigator.geolocation.getCurrentPosition(
-      this.getClientBrowserLocation,
-      this.handleErrorGettingBrowserLocation
+      getClientBrowserLocation.bind(this),
+      handleErrorGettingBrowserLocation.bind(this)
     );
 
     //     fetch('/data')
@@ -54,44 +89,6 @@ class App extends Component {
     //                 };
     //             });
     // });
-  }
-
-  // OBTAINING CLIENT'S BROWSER LOCATION
-  getClientBrowserLocation(position) {
-    const { latitude, longitude } = position.coords;
-    const latlon = { latitude, longitude };
-    console.log('longitude: ', longitude);
-    console.log('latitude: ', latitude);
-    // modify THIS ROUTE depending on backend
-    fetch('/data', {
-      method: 'POST',
-      body: JSON.stringify(latlon),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        console.log(json.trails);
-        this.setState({ trailData: json.trails });
-      })
-      .catch(e => console.error('unable to post', e));
-  }
-
-  handleErrorGettingBrowserLocation() {
-    const latlon = { latitude: 34.383966, longitude: -118.537239 };
-    fetch('/data', {
-      method: 'POST',
-      body: JSON.stringify(latlon),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        this.setState({ trailData: json.trails });
-      })
-      .catch(e => console.error('unable to post', e));
   }
 
   //invoked by on-click function in TrailDisplay, sets selected trail in state
@@ -129,7 +126,8 @@ class App extends Component {
   noTrail() {
     this.setState({
       selectedTrail: null,
-      displayTrailModal: false
+      displayTrailModal: false,
+      comments: []
     });
   }
   //invoked when clicking on the map popups
@@ -184,6 +182,7 @@ class App extends Component {
           displayTrail={this.displayTrail}
           showKey={this.showKey}
           diffKey={this.state.diffKey}
+          displayTrailModal={this.state.displayTrailModal}
         />
         {this.state.selectedTrail && (
           <TrailContainer
