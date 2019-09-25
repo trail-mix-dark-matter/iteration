@@ -14,7 +14,7 @@ import React from "react";
 function CommentsDisplay(props) {
     return (
         <div className="commentsDisplay">
-            <div> "{props.comment}"<br/>-{props.author} </div>
+            <div>"{props.comment}"<br/>-{props.author} </div>
             <br/>
         </div>
     );

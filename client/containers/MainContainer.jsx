@@ -17,7 +17,12 @@ import ListContainer from "./ListContainer.jsx";
 class MainContainer extends Component {
     render() {
         return (
-            <div id="main-container">
+            <div id="main-container" onClick={e => {
+                // console.log('in main container', this.props.displayTrailModal);
+                if(this.props.displayTrailModal) {
+                    this.props.noTrail();
+                }
+            }}>
                 <img src="../../assets/trail-mix-logo-small.jpg" className='logo'/><br />
                 <MapDisplay 
                 id="map-display"
