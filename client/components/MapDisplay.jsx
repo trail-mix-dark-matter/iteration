@@ -9,7 +9,7 @@
  * ************************************
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactMapGl, { Marker, Popup } from 'react-map-gl';
 import SvgTrekking from "./Icons/Trekking.js";
 
@@ -20,7 +20,7 @@ const MapDisplay = props => {
        longitude: -118.352,
        width: '70vw',
        height: '70vh',
-       zoom: 11
+       zoom: 11,
     });
     
     const [selectedHike, setSelectedHike] = useState(null);
@@ -49,7 +49,8 @@ const MapDisplay = props => {
                             longitude: trail.longitude,
                             width: '70vw',
                             height: '70vh',
-                            zoom: 16
+                            zoom: 16,
+                            showPopup: true,
                         });
                     }}
                     >
@@ -62,6 +63,10 @@ const MapDisplay = props => {
                 latitude={selectedHike.latitude}
                 longitude={selectedHike.longitude}
                 className='popup'
+                closeButton={true}
+                closeOnClick={false}
+                onClose={() => setSelectedHike(null)
+                }
                 >
                     <div onClick={() => props.displayTrail(selectedHike)}>
                         <h4 className='popup-name'>{selectedHike.name}</h4>

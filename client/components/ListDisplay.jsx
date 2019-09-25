@@ -25,7 +25,7 @@ const ListDisplay = props => {
                 onClick={(e) => props.getTrail(e.target.id)}
                 >
                 {/* below code solves async issues with populating trailData array*/}
-                {props.trailData.length > 0 && props.name}:&nbsp;
+                {props.trailData.length > 0 && props.name}
                 {props.trailData.length > 0 && props.location}
                 </p>
             </div>

@@ -20,7 +20,6 @@ class App extends Component {
         this.state = {
         trailData: [],
         selectedTrail: null,
-        isLoggedIn: true,
         comments: [], 
         diffKey: false
     }
@@ -51,12 +50,11 @@ class App extends Component {
         let trailsArr = this.state.trailData.slice();
         let chosenTrail;
         for (let i = 0; i < trailsArr.length; i++) {
-            if (trailsArr[i].id === +id) {
+            if (trailsArr[i].id == id) {
                 chosenTrail = trailsArr[i];
                 this.setState({selectedTrail: chosenTrail})
             };
         };
-
         fetch('/comments', {
             method: 'GET', 
             headers: {
@@ -119,7 +117,6 @@ class App extends Component {
     };
     //renders MainContainer and conditionally renders TrailContainer
     render() {
-        if (!this.state.isLoggedIn) return <Redirect to="/login" />
         return (
             <div className='appContainer'>
                 <MainContainer 

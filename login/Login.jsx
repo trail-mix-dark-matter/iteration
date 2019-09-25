@@ -57,16 +57,16 @@ class Login extends Component {
 
                     <form className="userInfo" >
                         <label className="labeluser"> Username: </label>
-                        <input className="username" type="text" placeholder="username" onChange={e => { this.setState({ username: e.target.value }) }}></input>
+                        <input className="username" type="text" placeholder="username" onChange={e => {this.setState({ username: e.target.value})}}></input>
                         <br />
                         <label className="labelpsw"> Password: </label>
                         <input className="password" type="password" placeholder="password" onChange={e => { this.setState({ password: e.target.value }) }}></input>
                         <button className="loginbtn" type="submit" onClick={e => {
                             e.preventDefault(); this.updateData();
-                        }}> Login</button>
+                        }}>Login</button>
                     </form>
                     <div className="link">
-                        <Link to="./signup"> SIGNUP </Link>
+                        <Link to="./signup">SIGNUP</Link>
                     </div>
                 </div >
         };
