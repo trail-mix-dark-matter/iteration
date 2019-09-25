@@ -26,13 +26,13 @@ class ListContainer extends Component {
                     getTrail = {this.props.getTrail}
                     showKey={this.props.showKey}
                     />
-                );
+                )
             });
             return (
                 < div className="listDisplay" >
                     {trails}
                 </div >
-            );
+            )
 };
 };
 
