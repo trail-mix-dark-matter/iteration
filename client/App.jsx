@@ -21,7 +21,8 @@ class App extends Component {
         trailData: [],
         selectedTrail: null,
         comments: [], 
-        diffKey: false
+        diffKey: false,
+        displayTrailModal: false
     }
     this.getTrail = this.getTrail.bind(this);
     this.noTrail = this.noTrail.bind(this);
@@ -32,7 +33,44 @@ class App extends Component {
 
     //fetches data from REI API and sets to state when the page loads
     componentDidMount() {
-            fetch('/data')
+    /* // OBTAINING CLIENT'S BROWSER LOCATION
+        function getClientBrowserLocation(position) {
+            const { latitude, longitude } = position.coords;
+            const latlon = { latitude, longitude }
+            // modify THIS ROUTE depending on backend
+            fetch('/data', {
+                method: 'POST',
+                body: JSON.stringify(latlon),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(json => {
+                    this.setState({trailData: json.trails})
+                })
+                .catch(e => console.error('unable to post', e))
+                
+        }
+
+        function handleErrorGettingBrowserLocation() {
+            const latlon = {latitude: 34.383966, longitude: -118.537239};
+            fetch('/data', {
+                method: 'POST',
+                body: JSON.stringify(latlon),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(json => {
+                    this.setState({trailData: json.trails})
+                })
+                .catch(e => console.error('unable to post', e))
+        }
+        navigator.geolocation.getCurrentPosition(getClientBrowserLocation, handleErrorGettingBrowserLocation);
+    */
+        fetch('/data')
             .then((res) => {
                 return res.json();
             })
@@ -47,12 +85,14 @@ class App extends Component {
 };
     //invoked by on-click function in TrailDisplay, sets selected trail in state
     getTrail(id) {
+        // console.log('in getTrail', this.state.selectedTrail)
         let trailsArr = this.state.trailData.slice();
-        let chosenTrail;
         for (let i = 0; i < trailsArr.length; i++) {
-            if (trailsArr[i].id == id) {
-                chosenTrail = trailsArr[i];
-                this.setState({selectedTrail: chosenTrail})
+            if (trailsArr[i].id === +id) {
+                this.setState({
+                    selectedTrail: trailsArr[i],
+                    displayTrailModal: true
+                })
             };
         };
         fetch('/comments', {
@@ -76,7 +116,10 @@ class App extends Component {
     };
     //closes TrailDisplay overlay
     noTrail() {
-        this.setState({selectedTrail: null})
+        this.setState({
+            selectedTrail: null,
+            displayTrailModal: false
+        })
     }
     //adds comment and author to database and pulls back all comments for specified trail and sets to state
     postComment(id, comment, author) {
@@ -105,7 +148,10 @@ class App extends Component {
     };
     //invoked when clicking on the map popups
     displayTrail(selectedHike) {
-        this.setState({selectedTrail: selectedHike});
+        this.setState({
+            selectedTrail: selectedHike,
+            displayTrailModal: true
+        });
     }
     //toggle that is invoked when clicking on the "difficulty" in the list items
     showKey() {
@@ -120,6 +166,8 @@ class App extends Component {
         return (
             <div className='appContainer'>
                 <MainContainer 
+                displayTrailModal={this.state.displayTrailModal} 
+                noTrail={this.noTrail}
                 className='mainContainer' 
                 trailData={this.state.trailData}
                 getTrail={this.getTrail}
