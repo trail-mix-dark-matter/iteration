@@ -29,8 +29,9 @@ const MapDisplay = props => {
         <div id="map-display">
             <ReactMapGl 
             {...viewport} 
-            mapboxApiAccessToken={`pk.eyJ1IjoiZXJlYXN0bWFuIiwiYSI6ImNrMHUyemE4bTBqdmwzYnFnMGk0Z2VzaWgifQ.AL6aKHfOcWqKwC72i3FyBg`}
-            mapStyle={`mapbox://styles/ereastman/ck0vjqz9x7y0g1cqs0vq5l9ld`}
+            mapboxApiAccessToken={`pk.eyJ1Ijoia2lya3NoaW4iLCJhIjoiY2sweWg2ZTE5MDc4NjNqb3cyYmpjOTdnNSJ9.dgxUMfBEZ2Ii8UdsJa6ngg`}
+            // mapStyle={`mapbox://styles/ereastman/ck0vjqz9x7y0g1cqs0vq5l9ld`}
+            mapStyle={`mapbox://styles/mapbox/outdoors-v11`}
             onViewportChange={viewport => setViewport(viewport)}
             >
                 {/* map through trailData array in state to produce marker components, as well as popup components, on the map */}
@@ -61,6 +62,10 @@ const MapDisplay = props => {
                 <Popup
                 latitude={selectedHike.latitude}
                 longitude={selectedHike.longitude}
+                closeOnClick={false}
+                onClose={() => 
+                    setSelectedHike(null)
+                }
                 className='popup'
                 >
                     <div onClick={() => props.displayTrail(selectedHike)}>

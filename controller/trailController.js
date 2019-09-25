@@ -9,7 +9,7 @@ trailController.getTrails = (req, res, next) => {
     fetch(url)
     .then(res => res.json())
     .then(json => {
-        res.locals.trails = json
+        res.locals.trails = json;
         return next()})
     .catch(err => next({
         err: 'trailController.getTrails: ERROR: Check server logs for details' 
