@@ -18,10 +18,10 @@ const TrailDisplay = props => {
         <p id='trailName'> <strong>{props.selectedTrail && props.selectedTrail.name}</strong><br/>
         {props.selectedTrail && props.selectedTrail.location}</p>
         <p>"{props.selectedTrail && props.selectedTrail.summary}"</p>
-        <p> Length: {props.selectedTrail && props.selectedTrail.length}&nbsp;miles</p>
+        <p> Length: {props.selectedTrail && props.selectedTrail.length}  miles</p>
         <p> Difficulty: {props.selectedTrail && props.selectedTrail.difficulty}</p>
-        <p> Trail Rating: {props.selectedTrail && props.selectedTrail.stars}&nbsp;stars</p>
-        <p> Ascent: {props.selectedTrail && props.selectedTrail.ascent}&nbsp;<br></br>
+        <p> Trail Rating: {props.selectedTrail && props.selectedTrail.stars}  stars</p>
+        <p> Ascent: {props.selectedTrail && props.selectedTrail.ascent}  <br></br>
         Descent: {props.selectedTrail && props.selectedTrail.descent}</p>
         <p> Conditions: {props.selectedTrail && props.selectedTrail.conditionStatus}<br/> 
         ({props.selectedTrail && props.selectedTrail.conditionDate})</p>
