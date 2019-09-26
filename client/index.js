@@ -20,7 +20,7 @@ render(
   <div>
     <Router>
       <Switch>
-        <Route path='/' exact component={Login} />
+        {/* <Route path='/' exact component={Login} /> */}
         <Route path='/homepage' component={App} />
         <Route path='/signup' component={Signup} />
       </Switch>

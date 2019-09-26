@@ -205,9 +205,9 @@ class App extends Component {
     //   return <Redirect to='/' />;
     // }
 
-    if (this.state.loggedOut || this.state.rerender) {
-      return <Redirect to='/' />;
-    }
+    // if (this.state.loggedOut || this.state.rerender) {
+    //   return <Redirect to='/' />;
+    // }
     return (
       <div className='appContainer'>
         <NavContainer logOut={this.logOut} />

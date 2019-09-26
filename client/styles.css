@@ -65,6 +65,7 @@ body {
 }
 
 .difficulty {
+    cursor: pointer;
     margin-left: 100px;
     width: 400px;
     text-align: center;
@@ -128,6 +129,7 @@ body {
     color: green;
 }
 .trail-name {
+    cursor: pointer;
     margin-top: -10px;
     margin-left: 110px;
     font-size: 15px;
@@ -206,12 +208,53 @@ body {
     border-radius: 10px;
 }
 
+.Modal h3, .Modal h4  {
+    margin: 0px;
+}
+
+.Modal h3 {
+    font-size: 28px;
+}
+
+.Modal h4 {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.trailImgInfo {
+    display: flex;
+    justify-content: space-between; 
+    margin: 10px 0 0 0;  
+}
+
+.trailImage {
+    max-width: 70%;
+}
+
+.trailInfo {
+    max-width: 35%;
+}
+
+.trailSummary {
+    margin: 0px;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.trailDetails {
+    margin: 20px 0 0 0;
+
+}
+
+.updateDate {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6)
+}
+
 .Overlay {
     position: fixed;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
-    /* background-color: indianred; */
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.75);
 }
