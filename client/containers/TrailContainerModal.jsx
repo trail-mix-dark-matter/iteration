@@ -4,8 +4,8 @@
  * @module  TrailContainer.jsx
  * @author
  * @date
- * @description presentation component that displays the TrailDisplay and
- * CommentsDisplay
+ * @description modified original TrailContainer component into react-modal component: 
+ * presentation component that displays the TrailDisplay and CommentsDisplay
  * ************************************
  */
 import React, { Component } from 'react';
@@ -32,7 +32,7 @@ class TrailContainer extends Component {
         );
       });
     }
-
+    
     if(this.props.selectedTrail) {
       return (
         <Modal 
@@ -41,16 +41,12 @@ class TrailContainer extends Component {
           onRequestClose={this.props.noTrail} 
           overlayClassName='Overlay'
         >
-        <div className="trailInfoAndComments">
+
         <TrailDisplay selectedTrail={this.props.selectedTrail} />
           <div className='comments'>{comments}</div>
             <br />
             {/* input fields and button to add comments */}
-            {/* <input type='textarea' name='comment' id='commentForm'></input> */}
             <textarea name='comment' id='commentForm' />
-            <br />
-            <br />
-            <br />
             <button
               value='Submit'
               id={this.props.selectedTrail.id}
@@ -62,12 +58,7 @@ class TrailContainer extends Component {
             >
               Submit
             </button>
-        </div>
         </Modal>
-        // <div className='modalGuts' onKeyPress={e => {console.log('in trailcontainer...', e); if(e.key === 'Escape') this.props.noTrail()}}>
-        //   <button onClick={e => this.props.noTrail()}>close</button>
-          
-        // </div>
       );
     } 
     return null;

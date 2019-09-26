@@ -30,6 +30,9 @@ class MainContainer extends Component {
                 trailData={this.props.trailData}
                 getTrail={this.props.getTrail}
                 displayTrail={this.props.displayTrail} 
+                latitude={this.props.latitude}
+                longitude={this.props.longitude}
+                getNewLatLon={this.props.getNewLatLon}
                 />
                 </div>
                 <div className="list-display">

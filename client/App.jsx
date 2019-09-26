@@ -30,7 +30,9 @@ class App extends Component {
       favorites: [],
       currentUsername: '',
       loggedOut: false,
-      rerender: false
+      rerender: false,
+      latitude: 34.383966,
+      longitude: -118.537239
     };
     this.getTrail = this.getTrail.bind(this);
     this.noTrail = this.noTrail.bind(this);
@@ -39,6 +41,7 @@ class App extends Component {
     this.showKey = this.showKey.bind(this);
     this.updateFavorites = this.updateFavorites.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
+    this.getNewLatLon = this.getNewLatLon.bind(this);
     this.logOut = this.logOut.bind(this);
   }
 
@@ -58,7 +61,7 @@ class App extends Component {
       })
         .then(res => res.json())
         .then(json => {
-          this.setState({ trailData: json.trails });
+          this.setState({ trailData: json.trails, latitude, longitude });
         })
         .catch(e => console.error('unable to post', e));
     }
@@ -126,9 +129,27 @@ class App extends Component {
       });
   }
 
+  getNewLatLon(latitude, longitude) {
+    this.setState({
+      latitude, longitude
+    }, () => {
+      fetch('/data', {
+        method: 'POST',
+        body: JSON.stringify({ latitude, longitude }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.setState({ trailData: json.trails });
+        })
+        .catch(e => console.error('unable to post', e));
+    })
+  }
+
   //invoked by on-click function in TrailDisplay, sets selected trail in state
   getTrail(id) {
-    // console.log('in getTrail', this.state.selectedTrail)
     let trailsArr = this.state.trailData.slice();
     for (let i = 0; i < trailsArr.length; i++) {
       if (trailsArr[i].id === +id) {
@@ -218,10 +239,8 @@ class App extends Component {
       <div className='appContainer'>
         <NavContainer logOut={this.logOut} />
         <MainContainer
-          displayTrailModal={this.state.displayTrailModal}
           noTrail={this.noTrail}
           className='mainContainer'
-          trailData={this.state.trailData}
           getTrail={this.getTrail}
           selectedTrail={this.state.selectedTrail}
           displayTrail={this.displayTrail}
@@ -231,6 +250,10 @@ class App extends Component {
           displayTrailModal={this.state.displayTrailModal}
           currentUsername={this.state.currentUsername}
           favorites={this.state.favorites}
+          getNewLatLon={this.getNewLatLon}
+          trailData={this.state.trailData}
+          latitude={this.state.latitude}
+          longitude={this.state.longitude}
         />
         <TrailContainerModal
           trailData={this.state.trailData}
