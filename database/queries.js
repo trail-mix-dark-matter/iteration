@@ -3,6 +3,7 @@ const pool = new Pool({
   connectionString:
     'postgres://rujfxqjg:X_2CBQyYkBulGgWOIBuD8gUWpvbAFvkR@otto.db.elephantsql.com:5432/rujfxqjg'
 });
+const uuidv4 = require('uuid/v4');
 
 const SALT_WORK_FACTOR = 10;
 const bcrypt = require('bcryptjs');
@@ -135,8 +136,9 @@ const verifyUser = (req, res, next) => {
 // create session
 const createSession = (req, res, next) => {
   const username = req.body.username;
-  const queryAddCookie = `INSERT INTO sessions (username) VALUES ($1)`;
-  const queryArray = [username];
+  const cookie = uuidv4();
+  const queryAddCookie = `INSERT INTO sessions (username, cookie) VALUES ($1, $2)`;
+  const queryArray = [username, cookie];
 
   pool.query(queryAddCookie, queryArray, error => {
     if (error) return error;
@@ -152,7 +154,6 @@ const addSession = (req, res, next) => {
 
   pool.query(queryGetCookie, queryArray, (error, cookie) => {
     if (error) return error;
-    // console.log(cookie);
     res.cookie('session', cookie.rows[0].cookie);
     return next();
   });
