@@ -30,7 +30,8 @@ class App extends Component {
       favorites: [],
       currentUsername: '',
       loggedOut: false,
-      rerender: false
+      rerender: false,
+      sortValue: ''
     };
     this.getTrail = this.getTrail.bind(this);
     this.noTrail = this.noTrail.bind(this);
@@ -39,6 +40,7 @@ class App extends Component {
     this.showKey = this.showKey.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
+    this.sortTrails = this.sortTrails.bind(this);
     this.logOut = this.logOut.bind(this);
   }
 
@@ -107,13 +109,13 @@ class App extends Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
+    });
   }
 
   getFavorites() {
     fetch('/getfavorites', {
-      method: "POST",
-      body: JSON.stringify({username: this.state.currentUsername}),
+      method: 'POST',
+      body: JSON.stringify({ username: this.state.currentUsername }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -204,6 +206,28 @@ class App extends Component {
       });
   }
 
+  sortTrails(event) {
+    const newSortValue = event.target.value;
+    const trailDataCopy = [...this.state.trailData];
+
+    switch (newSortValue) {
+      case 'shortest-length':
+        trailDataCopy.sort((a, b) => (a.length > b.length ? 1 : -1));
+        break;
+      case 'longest-length':
+        trailDataCopy.sort((a, b) => (a.length < b.length ? 1 : -1));
+        break;
+      case 'highest-rating':
+        trailDataCopy.sort((a, b) => (a.stars < b.stars ? 1 : -1));
+        break;
+      case 'lowest-rating':
+        trailDataCopy.sort((a, b) => (a.stars > b.stars ? 1 : -1));
+        break;
+    }
+
+    this.setState({ trailData: trailDataCopy, sortValue: event.target.value });
+  }
+
   logOut() {
     fetch('/logout');
     this.setState({ loggedOut: true });
@@ -234,6 +258,8 @@ class App extends Component {
           addFavorite={this.addFavorite}
           displayTrailModal={this.state.displayTrailModal}
           currentUsername={this.state.currentUsername}
+          sortValue={this.state.sortValue}
+          sortTrails={this.sortTrails}
         />
         <TrailContainerModal
           // className='modal'
