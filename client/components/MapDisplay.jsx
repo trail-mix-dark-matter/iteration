@@ -18,7 +18,7 @@ const MapDisplay = props => {
     const [viewport, setViewport] = useState({
        latitude: 34.1053,
        longitude: -118.352,
-       width: 1200,
+       width: 1100,
        height: 700,
        zoom: 10,
     });
@@ -50,11 +50,13 @@ const MapDisplay = props => {
             mapStyle={`mapbox://styles/mapbox/outdoors-v11`}
             onViewportChange={viewport => setViewport(viewport)}
             >
-            <div className="fullscreen" style={fullscreenControlStyle}>
-            <FullscreenControl />
-            </div>
-            <div className="nav" style={navStyle}>
-            <NavigationControl />
+            <div className="navigationIcons">
+                <div className="fullscreen" style={fullscreenControlStyle}>
+                <FullscreenControl />
+                </div>
+                <div className="nav" style={navStyle}>
+                <NavigationControl />
+                </div>
             </div>
                 {/* map through trailData array in state to produce marker components, as well as popup components, on the map */}
             {props.trailData.map(trail => (
@@ -69,7 +71,7 @@ const MapDisplay = props => {
                         setViewport({
                             latitude: trail.latitude,
                             longitude: trail.longitude,
-                            width: 1200,
+                            width: 1100,
                             height: 700,
                             zoom: 16,
                             showPopup: true,

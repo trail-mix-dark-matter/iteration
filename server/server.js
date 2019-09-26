@@ -57,8 +57,12 @@ app.post('/getfavorites', queries.getFavorites, (req, res) => {
 
 // post favorites
 app.post('/favorites', queries.addFavorite, (req, res) => {
-  return res.setStatus(200);
+  return res.sendStatus(200);
 });
+
+app.delete('/favorites', queries.deleteFavorite, (req, res) => {
+  return res.sendStatus(200);
+})
 
 // sends all comments pertaining to trail ID
 app.get('/comments', queries.getComment, (req, res) => {

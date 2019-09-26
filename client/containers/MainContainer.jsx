@@ -39,7 +39,8 @@ class MainContainer extends Component {
                 getTrail={this.props.getTrail}
                 showKey={this.props.showKey}
                 diffKey={this.props.diffKey} 
-                addFavorite={this.props.addFavorite}
+                updateFavorites={this.props.updateFavorites}
+                favorites={this.props.favorites}
                 />
 
                 </div>

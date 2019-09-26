@@ -215,3 +215,23 @@ body {
     /* background-color: indianred; */
     background-color: rgba(0, 0, 0, 0.4);
 }
+
+.navigationIcons {
+    position: relative;
+    z-index: 1;
+}
+
+.trail-image {
+    background: url(https://images.squarespace-cdn.com/content/v1/54f0b76ae4b0132c013cb416/1510821789874-75FQCI0LGKPY7N0IPIPY/ke17ZwdGBToddI8pDm48kDl6krNSZnEnLUm2IBbsuq9Zw-zPPgdn4jUwVcJE1ZvWhcwhEtWJXoshNdA9f1qD7Xj1nVWs2aaTtWBneO2WM-vWzqfj_UtnJmNNsqzElB8Oboh9TmVmwAB9yBJjdgXZCg/not-available.jpg);
+    background-size: cover;
+    width: 100px;
+}
+
+.trail-image img {
+    object-fit: cover;
+    width: 100px;
+}
+
+.stars {
+    margin-left: 4px;
+}

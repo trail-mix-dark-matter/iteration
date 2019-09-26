@@ -41,8 +41,11 @@
     "babel-loader": "^8.0.6",
     "cookie-parser": "^1.4.4",
     "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
     "nodemon": "^1.19.2",
+    "path-loader": "^1.0.10",
     "style-loader": "^1.0.0",
+    "url-loader": "^2.1.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"

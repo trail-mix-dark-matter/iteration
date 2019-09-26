@@ -37,7 +37,7 @@ class App extends Component {
     this.postComment = this.postComment.bind(this);
     this.displayTrail = this.displayTrail.bind(this);
     this.showKey = this.showKey.bind(this);
-    this.addFavorite = this.addFavorite.bind(this);
+    this.updateFavorites = this.updateFavorites.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
     this.logOut = this.logOut.bind(this);
   }
@@ -89,25 +89,26 @@ class App extends Component {
       })
       .then(data => {
         if (data !== 'nothing') {
-          this.setState({ currentUsername: data });
+          this.setState({ currentUsername: data }, () => this.getFavorites());
         } else {
           this.setState({ rerender: true });
         }
       });
   }
 
-  componentDidUpdate() {
-    this.getFavorites();
-  }
 
-  addFavorite(username, id) {
+  updateFavorites(username, trailId) {
+    let method = 'POST';
+    if (this.state.favorites && this.state.favorites.includes(trailId)) method = 'DELETE';
     fetch('/favorites', {
-      method: 'POST',
-      body: JSON.stringify({ username: username, trailid: id }),
+      method,
+      body: JSON.stringify({ username: username, trailid: trailId }),
       headers: {
         'Content-Type': 'application/json'
       }
     })
+    .then(() => this.getFavorites())
+    .catch(err => console.log(err))
   }
 
   getFavorites() {
@@ -118,11 +119,10 @@ class App extends Component {
         'Content-Type': 'application/json'
       }
     })
-      .then(res => res.json)
+      .then(res => res.json())
       .then(data => {
-        console.log('get favorites data', data);
-        // this.setState({favorites : data})
-        // this.setState({ favorites: data.favorites })
+        console.log('data is:', data)
+        this.setState({favorites : data.map(object => object.trailid)})
       });
   }
 
@@ -211,10 +211,6 @@ class App extends Component {
 
   //renders MainContainer and conditionally renders TrailContainer
   render() {
-    // if (this.state.rerender) {
-    //   return <Redirect to='/' />;
-    // }
-
     if (this.state.loggedOut || this.state.rerender) {
       return <Redirect to='/' />;
     }
@@ -231,12 +227,12 @@ class App extends Component {
           displayTrail={this.displayTrail}
           showKey={this.showKey}
           diffKey={this.state.diffKey}
-          addFavorite={this.addFavorite}
+          updateFavorites={this.updateFavorites}
           displayTrailModal={this.state.displayTrailModal}
           currentUsername={this.state.currentUsername}
+          favorites={this.state.favorites}
         />
         <TrailContainerModal
-          // className='modal'
           trailData={this.state.trailData}
           displayTrailModal={this.state.displayTrailModal}
           noTrail={this.noTrail}
@@ -245,17 +241,6 @@ class App extends Component {
           comments={this.state.comments}
           getTrail={this.getTrail}
         />
-        {/* {this.state.selectedTrail && (
-          <TrailContainer
-            className='modal'
-            trailData={this.state.trailData}
-            selectedTrail={this.state.selectedTrail}
-            noTrail={this.noTrail}
-            postComment={this.postComment}
-            comments={this.state.comments}
-            getTrail={this.getTrail}
-          />
-        )} */}
       </div>
     );
   }
