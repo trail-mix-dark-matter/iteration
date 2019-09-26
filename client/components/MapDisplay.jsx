@@ -18,8 +18,8 @@ const MapDisplay = props => {
     const [viewport, setViewport] = useState({
        latitude: 34.1053,
        longitude: -118.352,
-       width: 900,
-       height: 500,
+       width: 1200,
+       height: 700,
        zoom: 10,
     });
     
@@ -44,6 +44,7 @@ const MapDisplay = props => {
         <div id="map-display">
             <ReactMapGl 
             {...viewport} 
+            className= "movingMap"
             mapboxApiAccessToken={`pk.eyJ1Ijoia2lya3NoaW4iLCJhIjoiY2sweWg2ZTE5MDc4NjNqb3cyYmpjOTdnNSJ9.dgxUMfBEZ2Ii8UdsJa6ngg`}
             // mapStyle={`mapbox://styles/ereastman/ck0vjqz9x7y0g1cqs0vq5l9ld`}
             mapStyle={`mapbox://styles/mapbox/outdoors-v11`}
@@ -69,8 +70,8 @@ const MapDisplay = props => {
                         setViewport({
                             latitude: trail.latitude,
                             longitude: trail.longitude,
-                            width: 900,
-                            height: 500,
+                            width: 1200,
+                            height: 700,
                             zoom: 16,
                             showPopup: true,
                         });

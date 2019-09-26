@@ -1,13 +1,22 @@
+body {
+    font-family: Noto Serif;
+}
+
 .appContainer {
     position: relative;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .mainContainer {
     position: relative;
     display: flex;
     justify-content: center;
-    z-index: 1;
+    /* z-index: 1; */
+    width: 100%;
+}
+
+.map-and-list {
+    display: flex;
 }
 
 #main-container {
@@ -24,39 +33,29 @@
     margin-right: auto;
 }
 
-#map-display {
-    z-index: 1;
-}
-
 .list {
     display: flex;
 }
 
-.evens {
-    display: flex;
-    background-color: rgb(122, 185, 119);
-}
-
-.odds {
+.trailinfo-star {
     display: flex;
 }
 
-.column {
-    float: left;
-    width: 33.33%;
+.miles-location {
+    margin-left: 130px;
+    display: flex;
 }
 
-.column p {
-    font-family: 'Arial';
-    font-weight: 550;
+.list-items {
+    display: flex;
+    background-color: white;
+    border: solid;
+    border-radius: 3px;
+    height: 100px;
+    font-size: 12px;
 }
-
-.left {
-    width: 40%;
-}
-
-.middle, .right {
-    width: 30%;
+.trail-info {
+    margin-left: -100px;
 }
   
 .row:after {
@@ -65,12 +64,10 @@
     clear: both;
 }
 
-.length {
-    margin-left: 100px;
-}
-
 .difficulty {
-    margin-left: 50px;
+    margin-left: 100px;
+    width: 400px;
+    text-align: center;
 }
 
 .popup {
@@ -108,9 +105,9 @@
     padding-top: 0;
     padding-left: 0;
 }
-
+/* 
 .modalGuts {
-    position: fixed;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -124,18 +121,31 @@
     z-index: 9999;
     font-family: 'Arial';
     font-weight: 250;
+} */
+.favIcon {
+    margin-top: 10px;
+    font-size: 20px;
+    color: green;
+}
+.trail-name {
+    margin-top: -10px;
+    margin-left: 110px;
+    font-size: 15px;
+    font-family: Noto Serif;
+    text-overflow: ellipsis;
+    display:flex;
 }
 
-#trailName {
-    font-size: 24px;
+.trail-name p {
+    margin-bottom: -10px;
 }
 
-#trailImage {
+/* #trailImage {
     border: 2px solid rgb(122, 185, 119);
     border-radius: 10px;
     text-align: center;
     z-index: 2;
-}
+} */
 
 #diff-key {
     position: fixed;
@@ -149,5 +159,59 @@
     text-align: center;
     border: 2px solid darkgreen;
     border-radius: 5px;
-    z-index: 2;
+    /* z-index: 2; */
+}
+
+.list-display {
+    max-height:700px;
+    overflow-y:scroll;
+    width: 35%;
+}
+
+.location {
+    margin-left: 4px;
+}
+
+.green, .greenBlue {
+    background-color: green;
+    color: white;
+}
+
+.blue, .blueBlack {
+    background-color: blue;
+    color: white;
+}
+
+.black, .blackBlack {
+    background-color: black;
+    color: white;
+}
+
+.Modal {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    border: 1px solid rgb(204, 204, 204);
+    background: cornsilk;
+    overflow: auto;
+    border-radius: 10px;
+    outline: none;
+    padding: 20px;
+}
+
+.Modal textarea, .Modal img {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.Overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    /* background-color: indianred; */
+    background-color: rgba(0, 0, 0, 0.4);
 }
