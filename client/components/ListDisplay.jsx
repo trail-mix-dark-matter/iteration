@@ -27,7 +27,7 @@ const ListDisplay = props => {
     return (
         <div className="list-items"> 
             <div className="trail-image">
-            <img src={props.image} onerror="if (this.src != 'http://textiletrends.in/gallery/1547020644No_Image_Available.jpg') this.src = 'http://textiletrends.in/gallery/1547020644No_Image_Available.jpg';"/>
+            <img src={props.image}/>
             </div>
             <div className="trail-info">
             <div className='difficulty'>

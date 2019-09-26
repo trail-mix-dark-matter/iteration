@@ -201,11 +201,13 @@ body {
     border-radius: 10px;
     outline: none;
     padding: 20px;
+    z-index: 10;
 }
 
 .Modal textarea, .Modal img {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    z-index: 10;
 }
 
 .Modal h3, .Modal h4  {
@@ -257,4 +259,9 @@ body {
     right: 0px;
     bottom: 0px;
     background-color: rgba(0, 0, 0, 0.75);
+    z-index: 1;
 }
+
+/* .mapboxgl-ctrl-bottom-right { position: absolute; pointer-events: none; z-index: 0;}
+
+.mapboxgl-ctrl-geocoder {z-index: 0; } */

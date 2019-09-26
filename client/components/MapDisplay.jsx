@@ -9,19 +9,40 @@
  * ************************************
  */
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ReactMapGl, { Marker, Popup, NavigationControl, FullscreenControl } from 'react-map-gl';
 import SvgTrekking from "./Icons/Trekking.js";
+import Geocoder from 'react-map-gl-geocoder';
+
+function getAccessToken() {
+    var accessToken = null;
+   
+    if (typeof window !== 'undefined' && window.location) {
+      var match = window.location.search.match(/access_token=([^&\/]*)/);
+      accessToken = match && match[1];
+    }
+   
+    if (!accessToken && typeof process !== 'undefined') {
+      // Note: This depends on bundler plugins (e.g. webpack) inmporting environment correctly
+      accessToken = accessToken || process.env.MapboxAccessToken; // eslint-disable-line
+    }
+   
+    return accessToken || null;
+}
+
+const MAPBOX_TOKEN = getAccessToken();
 
 //importing ReactMapGl component from react-map-gl module, using react hooks to set local state 
 const MapDisplay = props => {
     const [viewport, setViewport] = useState({
-       latitude: 34.1053,
-       longitude: -118.352,
+       latitude: props.latitude,
+       longitude: props.longitude,
        width: 1200,
        height: 700,
        zoom: 10,
     });
+
+    const mapRef = useRef(null);
     
     const [selectedHike, setSelectedHike] = useState(null);
 
@@ -39,15 +60,16 @@ const MapDisplay = props => {
         left: 0,
         padding: '10px'
     };
-
+    console.log('this is maptoken', MAPBOX_TOKEN, process.env.MapboxAccessToken);
     return (
         <div id="map-display">
             <ReactMapGl 
             {...viewport} 
+            ref={mapRef}
             className= "movingMap"
             mapboxApiAccessToken={`pk.eyJ1Ijoia2lya3NoaW4iLCJhIjoiY2sweWg2ZTE5MDc4NjNqb3cyYmpjOTdnNSJ9.dgxUMfBEZ2Ii8UdsJa6ngg`}
             // mapStyle={`mapbox://styles/ereastman/ck0vjqz9x7y0g1cqs0vq5l9ld`}
-            mapStyle={`mapbox://styles/mapbox/outdoors-v11`}
+            mapStyle={`mapbox://styles/kirkshin/ck115ty8y0dw11ckcjf8bgwx6`}
             onViewportChange={viewport => setViewport(viewport)}
             >
             <div className="fullscreen" style={fullscreenControlStyle}>
@@ -56,6 +78,14 @@ const MapDisplay = props => {
             <div className="nav" style={navStyle}>
             <NavigationControl />
             </div>
+            <Geocoder
+                onViewportChange={viewport => {
+                    props.getNewLatLon(viewport.latitude, viewport.longitude);
+                    setViewport({...viewport});
+                }}
+                mapboxApiAccessToken={`pk.eyJ1Ijoia2lya3NoaW4iLCJhIjoiY2sweWg2ZTE5MDc4NjNqb3cyYmpjOTdnNSJ9.dgxUMfBEZ2Ii8UdsJa6ngg`}
+                mapRef={mapRef}
+            />   
                 {/* map through trailData array in state to produce marker components, as well as popup components, on the map */}
             {props.trailData.map(trail => (
                 <Marker 

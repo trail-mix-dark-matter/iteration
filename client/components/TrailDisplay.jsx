@@ -26,7 +26,7 @@ const TrailDisplay = props => {
         <h3> <strong>{props.selectedTrail && props.selectedTrail.name}</strong></h3><br/>
         <h4>{props.selectedTrail && props.selectedTrail.location}</h4>
         <div className="trailImgInfo" >
-            <img src={props.selectedTrail && props.selectedTrail.imgMedium} class='trailImage'/>
+            <img src={props.selectedTrail && props.selectedTrail.imgMedium} className='trailImage'/>
             <div className="trailInfo">
                 <p className="trailSummary">"{props.selectedTrail && props.selectedTrail.summary}"</p>
                 <div className="trailDetails">

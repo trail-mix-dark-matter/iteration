@@ -30,7 +30,9 @@ class App extends Component {
       favorites: [],
       currentUsername: '',
       loggedOut: false,
-      rerender: false
+      rerender: false,
+      latitude: 34.383966,
+      longitude: -118.537239
     };
     this.getTrail = this.getTrail.bind(this);
     this.noTrail = this.noTrail.bind(this);
@@ -39,6 +41,7 @@ class App extends Component {
     this.showKey = this.showKey.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
+    this.getNewLatLon = this.getNewLatLon.bind(this);
     this.logOut = this.logOut.bind(this);
   }
 
@@ -58,7 +61,7 @@ class App extends Component {
       })
         .then(res => res.json())
         .then(json => {
-          this.setState({ trailData: json.trails });
+          this.setState({ trailData: json.trails, latitude, longitude });
         })
         .catch(e => console.error('unable to post', e));
     }
@@ -89,7 +92,6 @@ class App extends Component {
       })
       .then(data => {
         if (data !== 'nothing') {
-          console.log('hi');
           this.setState({ currentUsername: data });
         } else {
           this.setState({ rerender: true });
@@ -114,6 +116,25 @@ class App extends Component {
         console.log(data);
         // this.setState({ favorites: data.favorites })
       });
+  }
+
+  getNewLatLon(latitude, longitude) {
+    this.setState({
+      latitude, longitude
+    }, () => {
+      fetch('/data', {
+        method: 'POST',
+        body: JSON.stringify({ latitude, longitude }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => res.json())
+        .then(json => {
+          this.setState({ trailData: json.trails });
+        })
+        .catch(e => console.error('unable to post', e));
+    })
   }
 
   //invoked by on-click function in TrailDisplay, sets selected trail in state
@@ -201,6 +222,7 @@ class App extends Component {
 
   //renders MainContainer and conditionally renders TrailContainer
   render() {
+    console.log('in app render, latitude-long', this.state.latitude, this.state.longitude)
     // if (this.state.rerender) {
     //   return <Redirect to='/' />;
     // }
@@ -215,14 +237,17 @@ class App extends Component {
           displayTrailModal={this.state.displayTrailModal}
           noTrail={this.noTrail}
           className='mainContainer'
-          trailData={this.state.trailData}
           getTrail={this.getTrail}
           selectedTrail={this.state.selectedTrail}
           displayTrail={this.displayTrail}
           showKey={this.showKey}
           diffKey={this.state.diffKey}
           addFavorite={this.addFavorite}
+          getNewLatLon={this.getNewLatLon}
+          trailData={this.state.trailData}
           displayTrailModal={this.state.displayTrailModal}
+          latitude={this.state.latitude}
+          longitude={this.state.longitude}
         />
         <TrailContainerModal
           // className='modal'

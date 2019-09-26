@@ -4,8 +4,8 @@
  * @module  TrailContainer.jsx
  * @author
  * @date
- * @description presentation component that displays the TrailDisplay and
- * CommentsDisplay
+ * @description modified original TrailContainer component into react-modal component: 
+ * presentation component that displays the TrailDisplay and CommentsDisplay
  * ************************************
  */
 import React, { Component } from 'react';
@@ -32,7 +32,6 @@ class TrailContainer extends Component {
         );
       });
     }
-    console.log(this.props.displayTrailModal);
     if(this.props.selectedTrail) {
       return (
         <Modal 
