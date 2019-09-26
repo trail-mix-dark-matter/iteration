@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const trailController = require('../controller/trailController');
 const queries = require('../database/queries.js');
 
@@ -9,6 +10,7 @@ const PORT = 3000;
 
 //extracts the entire body portion of an incoming request stream and exposes it on req.body
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //sends index.html file upon entering home page
 app.get('/homepage', (req, res) => {
@@ -19,18 +21,34 @@ app.get('/homepage', (req, res) => {
 app.post('/data', trailController.getTrails, (req, res) => {
   res.status(200).send(res.locals.trails);
 });
-
 //routes post request upon login to verify user
-app.post('/login', queries.verifyUser, (req, res) => {
+app.post('/login', queries.verifyUser, queries.addSession, (req, res) => {
   const { verified } = res.locals;
   return res.status(200).json(verified);
+});
+app.get('/gettingUser', queries.getUserThroughCookie, (req, res) => {
+  return res.status(200).json(res.locals.username);
+});
+
+// log out user
+app.get('/logout', (req, res) => {
+  res
+    .clearCookie('session')
+    .status(200)
+    .end();
 });
 
 // post request that brings in user-input signup information, creates a new user in the database, and sends verification to the front end
-app.post('/signup', queries.createUser, (req, res) => {
-  const { verified } = res.locals;
-  return res.status(200).json(verified);
-});
+app.post(
+  '/signup',
+  queries.createUser,
+  queries.createSession,
+  queries.addSession,
+  (req, res) => {
+    const { verified } = res.locals;
+    return res.status(200).json(verified);
+  }
+);
 
 // get favorites
 app.get('/favorites', queries.getFavorites, (req, res) => {
