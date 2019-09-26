@@ -22,7 +22,8 @@ class App extends Component {
       selectedTrail: null,
       comments: [],
       diffKey: false,
-      displayTrailModal: false
+      displayTrailModal: false,
+      favorites: []
     };
     this.getTrail = this.getTrail.bind(this);
     this.noTrail = this.noTrail.bind(this);
@@ -30,38 +31,24 @@ class App extends Component {
     this.displayTrail = this.displayTrail.bind(this);
     this.showKey = this.showKey.bind(this);
     this.getClientBrowserLocation = this.getClientBrowserLocation.bind(this);
-    this.handleErrorGettingBrowserLocation = this.handleErrorGettingBrowserLocation.bind(
-      this
-    );
+    this.handleErrorGettingBrowserLocation = this.handleErrorGettingBrowserLocation.bind(this);
+    this.addFavorite = this.addFavorite.bind(this);
+    this.getFavorites = this.getFavorites.bind(this);
   }
 
   //fetches data from REI API and sets to state when the page loads
   componentDidMount() {
+    // this.getFavorites();
     navigator.geolocation.getCurrentPosition(
       this.getClientBrowserLocation,
       this.handleErrorGettingBrowserLocation
     );
-
-    //     fetch('/data')
-    //         .then((res) => {
-    //             return res.json();
-    //         })
-    //         .then((res) => {
-    //             this.setState(state => {
-    //                 return {
-    //                     ...state,
-    //                     trailData: res.trails
-    //                 };
-    //             });
-    // });
   }
 
   // OBTAINING CLIENT'S BROWSER LOCATION
   getClientBrowserLocation(position) {
     const { latitude, longitude } = position.coords;
     const latlon = { latitude, longitude };
-    console.log('longitude: ', longitude);
-    console.log('latitude: ', latitude);
     // modify THIS ROUTE depending on backend
     fetch('/data', {
       method: 'POST',
@@ -72,7 +59,6 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json.trails);
         this.setState({ trailData: json.trails });
       })
       .catch(e => console.error('unable to post', e));
@@ -92,6 +78,25 @@ class App extends Component {
         this.setState({ trailData: json.trails });
       })
       .catch(e => console.error('unable to post', e));
+  }
+
+  addFavorite(username, id){
+    fetch('/favorites', {
+      method: 'POST',
+      body: JSON.stringify({username:username, trailid:id}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+
+  getFavorites(){
+    fetch('/favorites')
+    .then(res=> res.json)
+    .then(data=> {
+      console.log(data)
+      // this.setState({ favorites: data.favorites })
+    })
   }
 
   //invoked by on-click function in TrailDisplay, sets selected trail in state
@@ -184,6 +189,7 @@ class App extends Component {
           displayTrail={this.displayTrail}
           showKey={this.showKey}
           diffKey={this.state.diffKey}
+          addFavorite={this.addFavorite}
         />
         {this.state.selectedTrail && (
           <TrailContainer

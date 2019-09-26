@@ -23,7 +23,7 @@ class MainContainer extends Component {
                     this.props.noTrail();
                 }
             }}>
-                <img src="../../assets/trail-mix-logo-small.jpg" className='logo'/><br />
+                <img src="../../assets/trail-mix-logo.jpg" className='logo'/><br />
                 <div className="map-and-list">
                 <div className="map-display-width">
                 <MapDisplay 
@@ -38,6 +38,7 @@ class MainContainer extends Component {
                 getTrail={this.props.getTrail}
                 showKey={this.props.showKey}
                 diffKey={this.props.diffKey} 
+                addFavorite={this.props.addFavorite}
                 />
 
                 </div>

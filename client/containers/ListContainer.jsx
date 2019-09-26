@@ -17,6 +17,7 @@ class ListContainer extends Component {
             const trails = this.props.trailData.map((trail, idx) => {
                 return (
                     <ListDisplay idx={idx} key={idx}
+                    image={trail.imgSqSmall}
                     name = {trail.name}
                     location = {trail.location}
                     length = {trail.length}
@@ -25,6 +26,7 @@ class ListContainer extends Component {
                     trailData = {this.props.trailData}
                     getTrail = {this.props.getTrail}
                     showKey={this.props.showKey}
+                    addFavorite={this.props.addFavorite}
                     />
                 )
             });
