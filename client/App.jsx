@@ -11,9 +11,12 @@
 import React, { Component } from 'react';
 import MainContainer from './containers/MainContainer.jsx';
 import TrailContainer from './containers/TrailContainer.jsx';
+import TrailContainerModal from './containers/TrailContainerModal.jsx';
 
 //state includes data retrieved from REI API, selects selected trail
 // holds trail specific comments pulled from database
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,19 +41,16 @@ class App extends Component {
     function getClientBrowserLocation(position) {
         const { latitude, longitude } = position.coords;
         const latlon = { latitude, longitude };
-        console.log('longitude: ', longitude);
-        console.log('latitude: ', latitude);
         // modify THIS ROUTE depending on backend
         fetch('/data', {
-        method: 'POST',
-        body: JSON.stringify(latlon),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+            method: 'POST',
+            body: JSON.stringify(latlon),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
         .then(res => res.json())
         .then(json => {
-            console.log(json.trails);
             this.setState({ trailData: json.trails });
         })
         .catch(e => console.error('unable to post', e));
@@ -76,19 +76,6 @@ class App extends Component {
       getClientBrowserLocation.bind(this),
       handleErrorGettingBrowserLocation.bind(this)
     );
-
-    //     fetch('/data')
-    //         .then((res) => {
-    //             return res.json();
-    //         })
-    //         .then((res) => {
-    //             this.setState(state => {
-    //                 return {
-    //                     ...state,
-    //                     trailData: res.trails
-    //                 };
-    //             });
-    // });
   }
 
   //invoked by on-click function in TrailDisplay, sets selected trail in state
@@ -184,7 +171,17 @@ class App extends Component {
           diffKey={this.state.diffKey}
           displayTrailModal={this.state.displayTrailModal}
         />
-        {this.state.selectedTrail && (
+        <TrailContainerModal 
+            // className='modal'
+            trailData={this.state.trailData}
+            displayTrailModal={this.state.displayTrailModal}
+            noTrail={this.noTrail}
+            selectedTrail={this.state.selectedTrail}
+            postComment={this.postComment}
+            comments={this.state.comments}
+            getTrail={this.getTrail}
+        />
+        {/* {this.state.selectedTrail && (
           <TrailContainer
             className='modal'
             trailData={this.state.trailData}
@@ -194,7 +191,7 @@ class App extends Component {
             comments={this.state.comments}
             getTrail={this.getTrail}
           />
-        )}
+        )} */}
       </div>
     );
   }
