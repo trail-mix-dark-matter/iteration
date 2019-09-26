@@ -34,6 +34,7 @@ class MainContainer extends Component {
                 </div>
                 <div className="list-display">
                 <ListContainer 
+                currentUsername={this.props.currentUsername}
                 trailData={this.props.trailData} 
                 getTrail={this.props.getTrail}
                 showKey={this.props.showKey}

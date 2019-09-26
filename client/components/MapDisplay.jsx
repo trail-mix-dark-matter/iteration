@@ -11,7 +11,7 @@
 
 import React, { useState } from "react";
 import ReactMapGl, { Marker, Popup, NavigationControl, FullscreenControl } from 'react-map-gl';
-import SvgTrekking from "./Icons/Trekking.js";
+import CityPin from "./Icons/Trekking.jsx";
 
 //importing ReactMapGl component from react-map-gl module, using react hooks to set local state 
 const MapDisplay = props => {
@@ -44,9 +44,9 @@ const MapDisplay = props => {
         <div id="map-display">
             <ReactMapGl 
             {...viewport} 
+            id='map'
             className= "movingMap"
             mapboxApiAccessToken={`pk.eyJ1Ijoia2lya3NoaW4iLCJhIjoiY2sweWg2ZTE5MDc4NjNqb3cyYmpjOTdnNSJ9.dgxUMfBEZ2Ii8UdsJa6ngg`}
-            // mapStyle={`mapbox://styles/ereastman/ck0vjqz9x7y0g1cqs0vq5l9ld`}
             mapStyle={`mapbox://styles/mapbox/outdoors-v11`}
             onViewportChange={viewport => setViewport(viewport)}
             >
@@ -63,8 +63,7 @@ const MapDisplay = props => {
                 latitude={trail.latitude}
                 longitude={trail.longitude}
                 >
-                    <button
-                    onClick={e => {
+                        <CityPin onClick={e => {
                         e.preventDefault();
                         setSelectedHike(trail);
                         setViewport({
@@ -75,14 +74,12 @@ const MapDisplay = props => {
                             zoom: 16,
                             showPopup: true,
                         });
-                    }}
-                    >
-                        <SvgTrekking width='30px' height='30px' />
-                    </button>
+                    }}/>
                 </Marker>
             ))}
             {selectedHike && (
                 <Popup
+                anchor='top'
                 latitude={selectedHike.latitude}
                 longitude={selectedHike.longitude}
                 closeOnClick={false}

@@ -29,7 +29,7 @@ const addFavorite = (req, res, next) => {
   const queryArray = [username, trailid];
 
   pool.query(queryForFavorite, queryArray, error => {
-    if (error) return next(err);
+    if (error) return next(error);
     res.end();
   });
 };

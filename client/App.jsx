@@ -89,12 +89,15 @@ class App extends Component {
       })
       .then(data => {
         if (data !== 'nothing') {
-          console.log('hi');
           this.setState({ currentUsername: data });
         } else {
           this.setState({ rerender: true });
         }
       });
+  }
+
+  componentDidUpdate() {
+    this.getFavorites();
   }
 
   addFavorite(username, id) {
@@ -104,14 +107,21 @@ class App extends Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    });
+    })
   }
 
   getFavorites() {
-    fetch('/favorites')
+    fetch('/getfavorites', {
+      method: "POST",
+      body: JSON.stringify({username: this.state.currentUsername}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
       .then(res => res.json)
       .then(data => {
-        console.log(data);
+        console.log('get favorites data', data);
+        // this.setState({favorites : data})
         // this.setState({ favorites: data.favorites })
       });
   }
@@ -223,6 +233,7 @@ class App extends Component {
           diffKey={this.state.diffKey}
           addFavorite={this.addFavorite}
           displayTrailModal={this.state.displayTrailModal}
+          currentUsername={this.state.currentUsername}
         />
         <TrailContainerModal
           // className='modal'

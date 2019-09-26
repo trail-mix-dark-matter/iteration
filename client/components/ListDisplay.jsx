@@ -23,11 +23,10 @@ const ListDisplay = props => {
         black: 'DIFFICULT',
         blackBlack: 'EXTREMELY DIFFICULT'
     }
-
     return (
         <div className="list-items"> 
             <div className="trail-image">
-            <img src={props.image} onerror="if (this.src != 'http://textiletrends.in/gallery/1547020644No_Image_Available.jpg') this.src = 'http://textiletrends.in/gallery/1547020644No_Image_Available.jpg';"/>
+            <img src={props.image}/>
             </div>
             <div className="trail-info">
             <div className='difficulty'>
@@ -36,7 +35,7 @@ const ListDisplay = props => {
                 </p>
             </div>
             <div className="trail-name">
-                <p className = "favIcon" id={props.id} onClick={()=> props.addFavorite(username, id)}>&#9734;</p>
+                <p className = "favIcon" id={props.id} onClick={(e)=> props.addFavorite(props.currentUsername, e.target.id)}>&#9734;</p>
                 <p id={props.id} onClick={(e) => props.getTrail(e.target.id)}>
                  {props.trailData.length > 0 && props.name}
                 </p>
