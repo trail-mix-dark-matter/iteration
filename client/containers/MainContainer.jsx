@@ -23,25 +23,32 @@ class MainContainer extends Component {
                     this.props.noTrail();
                 }
             }}>
-                <img src="../../assets/trail-mix-logo-small.jpg" className='logo'/><br />
+                <img src="../../assets/trail-mix-logo.jpg" className='logo'/><br />
+                <div className="map-and-list">
+                <div className="map-display-width">
                 <MapDisplay 
-                id="map-display"
                 trailData={this.props.trailData}
                 getTrail={this.props.getTrail}
                 displayTrail={this.props.displayTrail} 
-                /><br />
+                />
+                </div>
+                <div className="list-display">
                 <ListContainer 
                 trailData={this.props.trailData} 
                 getTrail={this.props.getTrail}
                 showKey={this.props.showKey}
                 diffKey={this.props.diffKey} 
+                addFavorite={this.props.addFavorite}
                 />
+
+                </div>
                 {/* conditional renders difficulty key overlay */}
                 {this.props.diffKey && (
                     <div>
                         <img id='diff-key' src='../../assets/diff-key.jpg' />
                     </div>
-                )};
+                )}
+                </div>
             </div>
         );
     };

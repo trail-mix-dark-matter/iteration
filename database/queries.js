@@ -132,11 +132,54 @@ const verifyUser = (req, res, next) => {
   );
 };
 
+// create session
+const createSession = (req, res, next) => {
+  const username = req.body.username;
+  const queryAddCookie = `INSERT INTO sessions (username) VALUES ($1)`;
+  const queryArray = [username];
+
+  pool.query(queryAddCookie, queryArray, error => {
+    if (error) return error;
+    return next();
+  });
+};
+
+// add session
+const addSession = (req, res, next) => {
+  const username = req.body.username;
+  const queryGetCookie = `SELECT cookie FROM sessions WHERE username = $1`;
+  const queryArray = [username];
+
+  pool.query(queryGetCookie, queryArray, (error, cookie) => {
+    if (error) return error;
+    // console.log(cookie);
+    res.cookie('session', cookie.rows[0].cookie);
+    return next();
+  });
+};
+//getting User Through Cookie
+const getUserThroughCookie = (req, res, next) => {
+  const cookie = req.cookies.session;
+  const queryForUsername = `SELECT username FROM sessions WHERE cookie = $1`;
+  const queryArray = [cookie];
+  pool.query(queryForUsername, queryArray, (err, result) => {
+    if (err) return next(err);
+    if (!result.rows[0]) {
+      return res.json('nothing');
+    }
+    res.locals.username = result.rows[0].username;
+    return next();
+  });
+};
+
 module.exports = {
+  getUserThroughCookie,
   getFavorites,
   addFavorite,
   getComment,
   verifyUser,
   createUser,
-  postComment
+  postComment,
+  createSession,
+  addSession
 };
