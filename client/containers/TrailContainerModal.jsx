@@ -32,7 +32,7 @@ class TrailContainer extends Component {
         );
       });
     }
-    console.log(this.props.displayTrailModal);
+
     if(this.props.selectedTrail) {
       return (
         <Modal 
@@ -51,18 +51,13 @@ class TrailContainer extends Component {
             <br />
             <br />
             <br />
-            <input type='text' name='author' id='authorForm'></input>
-            <br />
-            <br />
             <button
               value='Submit'
               id={this.props.selectedTrail.id}
               onClick={e => {
                 const comment = document.getElementById('commentForm').value;
-                const author = document.getElementById('authorForm').value;
-                this.props.postComment(e.target.id, comment, author);
+                this.props.postComment(e.target.id, comment);
                 document.getElementById('commentForm').value = '';
-                document.getElementById('authorForm').value = '';
               }}
             >
               Submit

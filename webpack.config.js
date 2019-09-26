@@ -35,7 +35,9 @@ module.exports = {
       '/login': 'http://localhost:3000',
       '/comments': 'http://localhost:3000',
       '/gettingUser': 'http://localhost:3000',
-      '/logout': 'http://localhost:3000'
+      '/logout': 'http://localhost:3000',
+      '/favorites': 'http://localhost:3000',
+      '/getfavorites': 'http://localhost:3000',
     }
   },
   resolve: {
