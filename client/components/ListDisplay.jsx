@@ -13,8 +13,15 @@
 import React from "react";
 import Styles from "../styles.css"
 
+
 //display component for limited trail info, name clicks through to trail display and difficulty clicks through to difficulty key
+
+
 const ListDisplay = props => {
+    let FavIcon;
+    if (props.isFav) FavIcon = (<p className = "favIcon" id={props.id} onClick={(e)=> props.updateFavorites(props.currentUsername, e.target.id)}>&#9733;</p>)
+    else FavIcon = (<p className = "favIcon" id={props.id} onClick={(e)=> props.updateFavorites(props.currentUsername, e.target.id)}>&#9734;</p>)
+
     const difficultyColors = {
         green: 'EASY',
         greenBlue: 'EASY/INTERMEDIATE',
@@ -35,7 +42,7 @@ const ListDisplay = props => {
                 </p>
             </div>
             <div className="trail-name">
-                <p className = "favIcon" id={props.id} onClick={(e)=> props.addFavorite(props.currentUsername, e.target.id)}>&#9734;</p>
+                {FavIcon}
                 <p id={props.id} onClick={(e) => props.getTrail(e.target.id)}>
                  {props.trailData.length > 0 && props.name}
                 </p>
@@ -46,7 +53,10 @@ const ListDisplay = props => {
                 {props.trailData.length > 0 && props.length} mi • 
                 </p>
                 <p className="location"> 
-                {props.trailData.length > 0 && props.location}
+                {props.trailData.length > 0 && props.location} • 
+                </p>
+                <p className="stars">
+                {props.trailData.length > 0 && props.stars} stars
                 </p>
             </div>
             </div>

@@ -15,7 +15,7 @@ const getFavorites = (req, res, next) => {
   const queryArray = [username];
 
   pool.query(queryForFavorites, queryArray, (error, favorites) => {
-    if (error) return error;
+    if (error) return next(error);
     res.locals.favorites = favorites.rows;
     return next();
   });
@@ -30,9 +30,21 @@ const addFavorite = (req, res, next) => {
 
   pool.query(queryForFavorite, queryArray, error => {
     if (error) return next(error);
-    res.end();
+    return next();
   });
 };
+
+const deleteFavorite = (req, res, next) => {
+  const username = req.body.username;
+  const trailid = req.body.trailid;
+  const query = 'DELETE FROM favorites WHERE username = $1 AND trailid = $2';
+  const queryArray = [username, trailid];
+
+  pool.query(query, queryArray, error => {
+    if (error) return next(error);
+    return next();
+  })
+}
 
 // query fetching all comments for specific trails
 const getComment = (req, res, next) => {
@@ -182,5 +194,6 @@ module.exports = {
   createUser,
   postComment,
   createSession,
-  addSession
+  addSession,
+  deleteFavorite
 };
