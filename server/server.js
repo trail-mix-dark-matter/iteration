@@ -51,7 +51,7 @@ app.post(
 );
 
 // get favorites
-app.get('/favorites', queries.getFavorites, (req, res) => {
+app.post('/getfavorites', queries.getFavorites, (req, res) => {
   return res.status(200).json(res.locals.favorites);
 });
 
