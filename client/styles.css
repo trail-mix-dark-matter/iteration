@@ -4,14 +4,14 @@ body {
 
 .appContainer {
     position: relative;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .mainContainer {
     position: relative;
     display: flex;
     justify-content: center;
-    z-index: 1;
+    /* z-index: 1; */
     width: 100%;
 }
 
@@ -140,12 +140,12 @@ body {
     margin-bottom: -10px;
 }
 
-#trailImage {
+/* #trailImage {
     border: 2px solid rgb(122, 185, 119);
     border-radius: 10px;
     text-align: center;
     z-index: 2;
-}
+} */
 
 #diff-key {
     position: fixed;
@@ -159,7 +159,7 @@ body {
     text-align: center;
     border: 2px solid darkgreen;
     border-radius: 5px;
-    z-index: 2;
+    /* z-index: 2; */
 }
 
 .list-display {
@@ -185,4 +185,33 @@ body {
 .black, .blackBlack {
     background-color: black;
     color: white;
+}
+
+.Modal {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    border: 1px solid rgb(204, 204, 204);
+    background: cornsilk;
+    overflow: auto;
+    border-radius: 10px;
+    outline: none;
+    padding: 20px;
+}
+
+.Modal textarea, .Modal img {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.Overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    /* background-color: indianred; */
+    background-color: rgba(0, 0, 0, 0.4);
 }

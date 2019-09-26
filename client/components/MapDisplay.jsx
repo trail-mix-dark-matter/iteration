@@ -70,8 +70,8 @@ const MapDisplay = props => {
                         setViewport({
                             latitude: trail.latitude,
                             longitude: trail.longitude,
-                            width: 900,
-                            height: 500,
+                            width: 1200,
+                            height: 700,
                             zoom: 16,
                             showPopup: true,
                         });

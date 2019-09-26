@@ -11,9 +11,12 @@
 import React, { Component } from 'react';
 import MainContainer from './containers/MainContainer.jsx';
 import TrailContainer from './containers/TrailContainer.jsx';
+import TrailContainerModal from './containers/TrailContainerModal.jsx';
 
 //state includes data retrieved from REI API, selects selected trail
 // holds trail specific comments pulled from database
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -30,54 +33,51 @@ class App extends Component {
     this.postComment = this.postComment.bind(this);
     this.displayTrail = this.displayTrail.bind(this);
     this.showKey = this.showKey.bind(this);
-    this.getClientBrowserLocation = this.getClientBrowserLocation.bind(this);
-    this.handleErrorGettingBrowserLocation = this.handleErrorGettingBrowserLocation.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
   }
 
   //fetches data from REI API and sets to state when the page loads
   componentDidMount() {
-    // this.getFavorites();
+       // OBTAINING CLIENT'S BROWSER LOCATION
+    function getClientBrowserLocation(position) {
+        const { latitude, longitude } = position.coords;
+        const latlon = { latitude, longitude };
+        // modify THIS ROUTE depending on backend
+        fetch('/data', {
+            method: 'POST',
+            body: JSON.stringify(latlon),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            this.setState({ trailData: json.trails });
+        })
+        .catch(e => console.error('unable to post', e));
+    }
+
+    function handleErrorGettingBrowserLocation() {
+        const latlon = { latitude: 34.383966, longitude: -118.537239 };
+        fetch('/data', {
+          method: 'POST',
+          body: JSON.stringify(latlon),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => res.json())
+          .then(json => {
+            this.setState({ trailData: json.trails });
+          })
+          .catch(e => console.error('unable to post', e));
+      }
+
     navigator.geolocation.getCurrentPosition(
-      this.getClientBrowserLocation,
-      this.handleErrorGettingBrowserLocation
+      getClientBrowserLocation.bind(this),
+      handleErrorGettingBrowserLocation.bind(this)
     );
-  }
-
-  // OBTAINING CLIENT'S BROWSER LOCATION
-  getClientBrowserLocation(position) {
-    const { latitude, longitude } = position.coords;
-    const latlon = { latitude, longitude };
-    // modify THIS ROUTE depending on backend
-    fetch('/data', {
-      method: 'POST',
-      body: JSON.stringify(latlon),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        this.setState({ trailData: json.trails });
-      })
-      .catch(e => console.error('unable to post', e));
-  }
-
-  handleErrorGettingBrowserLocation() {
-    const latlon = { latitude: 34.383966, longitude: -118.537239 };
-    fetch('/data', {
-      method: 'POST',
-      body: JSON.stringify(latlon),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(json => {
-        this.setState({ trailData: json.trails });
-      })
-      .catch(e => console.error('unable to post', e));
   }
 
   addFavorite(username, id){
@@ -134,7 +134,8 @@ class App extends Component {
   noTrail() {
     this.setState({
       selectedTrail: null,
-      displayTrailModal: false
+      displayTrailModal: false,
+      comments: []
     });
   }
   //invoked when clicking on the map popups
@@ -190,8 +191,19 @@ class App extends Component {
           showKey={this.showKey}
           diffKey={this.state.diffKey}
           addFavorite={this.addFavorite}
+          displayTrailModal={this.state.displayTrailModal}
         />
-        {this.state.selectedTrail && (
+        <TrailContainerModal 
+            // className='modal'
+            trailData={this.state.trailData}
+            displayTrailModal={this.state.displayTrailModal}
+            noTrail={this.noTrail}
+            selectedTrail={this.state.selectedTrail}
+            postComment={this.postComment}
+            comments={this.state.comments}
+            getTrail={this.getTrail}
+        />
+        {/* {this.state.selectedTrail && (
           <TrailContainer
             className='modal'
             trailData={this.state.trailData}
@@ -201,7 +213,7 @@ class App extends Component {
             comments={this.state.comments}
             getTrail={this.getTrail}
           />
-        )}
+        )} */}
       </div>
     );
   }

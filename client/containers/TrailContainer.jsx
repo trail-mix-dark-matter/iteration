@@ -31,14 +31,15 @@ class TrailContainer extends Component {
       });
     }
     return (
-      <div className='modalGuts'>
+      <div className='modalGuts' onKeyPress={e => {console.log('in trailcontainer...', e); if(e.key === 'Escape') this.props.noTrail()}}>
         <button onClick={e => this.props.noTrail()}>close</button>
         <TrailDisplay selectedTrail={this.props.selectedTrail} />
         <div className='comments'>{comments}</div>
         <div>
           <br />
           {/* input fields and button to add comments */}
-          <input type='text' name='comment' id='commentForm'></input>
+          {/* <input type='textarea' name='comment' id='commentForm'></input> */}
+          <textarea name='comment' id='commentForm' />
           <br />
           <br />
           <br />
