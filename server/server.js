@@ -11,12 +11,12 @@ const PORT = 3000;
 //extracts the entire body portion of an incoming request stream and exposes it on req.body
 app.use(bodyParser.json());
 app.use(cookieParser());
-
+app.use('/assets', express.static(path.join(__dirname, '../assets')));
+app.use('/build', express.static(path.join(__dirname, '../build')));
 //sends index.html file upon entering home page
 app.get('/homepage', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 });
-
 //fetches trail data from REI API
 app.post('/data', trailController.getTrails, (req, res) => {
   res.status(200).send(res.locals.trails);
@@ -24,6 +24,7 @@ app.post('/data', trailController.getTrails, (req, res) => {
 //routes post request upon login to verify user
 app.post('/login', queries.verifyUser, queries.addSession, (req, res) => {
   const { verified } = res.locals;
+  console.log(res.locals);
   return res.status(200).json(verified);
 });
 app.get('/gettingUser', queries.getUserThroughCookie, (req, res) => {
@@ -62,7 +63,7 @@ app.post('/favorites', queries.addFavorite, (req, res) => {
 
 app.delete('/favorites', queries.deleteFavorite, (req, res) => {
   return res.sendStatus(200);
-})
+});
 
 // sends all comments pertaining to trail ID
 app.get('/comments', queries.getComment, (req, res) => {
