@@ -36,6 +36,7 @@ class MainContainer extends Component {
               latitude={this.props.latitude}
               longitude={this.props.longitude}
               getNewLatLon={this.props.getNewLatLon}
+              pressPlay={this.props.pressPlay}
             />
           </div>
           <div className='list-display'>

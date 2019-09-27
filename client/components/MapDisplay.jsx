@@ -65,7 +65,6 @@ const MapDisplay = props => {
     left: 0,
     padding: '10px'
   };
-  console.log('this is maptoken', MAPBOX_TOKEN, process.env.MapboxAccessToken);
   return (
     <div id='map-display'>
       <ReactMapGl
@@ -111,6 +110,10 @@ const MapDisplay = props => {
                   zoom: 16,
                   showPopup: true
                 });
+
+                if (trail.name === 'Codesmith') {
+                  props.pressPlay();
+                }
               }}
             />
           </Marker>
