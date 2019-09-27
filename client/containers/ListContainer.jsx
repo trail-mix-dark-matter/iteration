@@ -15,7 +15,6 @@ import ListDisplay from "../components/ListDisplay.jsx";
 class ListContainer extends Component {
     
     render() {
-        console.log('this.props.favorites is:', this.props.favorites)
             const trails = this.props.trailData.map((trail, idx) => {
 
                 let isFav = (this.props.favorites.includes(trail.id.toString())) 

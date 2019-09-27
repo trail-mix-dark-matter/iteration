@@ -163,7 +163,9 @@ class App extends Component {
       if (trailsArr[i].id === +id) {
         this.setState({
           selectedTrail: trailsArr[i],
-          displayTrailModal: true
+          displayTrailModal: true,
+          latitude: trailsArr[i].latitude,
+          longitude: trailsArr[i].longitude
         });
       }
     }
@@ -198,7 +200,7 @@ class App extends Component {
   displayTrail(selectedHike) {
     this.setState({
       selectedTrail: selectedHike,
-      displayTrailModal: true
+      displayTrailModal: true,
     });
   }
   //toggle that is invoked when clicking on the "difficulty" in the list items
@@ -267,7 +269,9 @@ class App extends Component {
     }
     return (
       <div className='appContainer'>
+        <div className="nav-bar">
         <NavContainer logOut={this.logOut} />
+        </div>
         <MainContainer
           noTrail={this.noTrail}
           className='mainContainer'

@@ -260,3 +260,22 @@ body {
 .stars {
     margin-left: 4px;
 }
+
+.sort-feature {
+    display: flex;
+    align-items: center;
+    background-color: skyblue;
+    border: solid;
+    border-radius: 3px;
+    padding: 10px 10px 10px 0px;
+}
+
+.sort-feature label {
+    width: 100px;
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+
+select {
+    width: 300px;
+}
