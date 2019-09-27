@@ -1,67 +1,150 @@
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+}
+#content,
+.container,
+.login-Container,
+#blurEffect {
+	height: 100%;
+}
+#blurEffect {
+	background-image: url("/assets/mountainslogin.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.login-Container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* -webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px); */
+}
+
 .loginArea {
-    display: grid;
-    grid-auto-rows: 30% 80% 10%;
-    align-content: center;
-    justify-content: center;
-    height: 200px;
-    width: 1270px;
-    margin: 140px 0px -10px 0px;
+	/* justify-content: center; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	height: 65%;
+	width: 30%;
+	/* border: 10px solid black; */
+	background: rgba(29, 28, 28, 0.3);
+	/* margin: 140px 0px -10px 0px; */
+	box-shadow: 0px 0px 7px rgb(0, 0, 0);
 }
 
+#logoMix {
+	width: 400px;
+	height: 250px;
+	max-width: 400px;
+	max-height: 250px;
+}
 .pic {
-    width:350px;
-    height:200px;
-    margin: -40px -100px 0px 450px;
-}
-
-@keyframes mymove {
-  0%   {top: 0px; left: 0px; background: rgb(122, 185, 119);}
-  25%  {top: 0px; left: 0px; background:  #4f4507;}
-  50%  {top: 0px; left: 0px; background: rgb(122, 185, 119);}
-  75%  {top: 0px; left: 0px; background: #4f4507;}
-  85% {top: 0px; left: 0px; background: rgb(122, 185, 119);}
-  100% {top: 0px; left: 0px; background: #4f4507;}
+	filter: invert(1) brightness(90%);
+	/* filter: brightness(10%); */
+	max-width: 400px;
+	max-height: 300px;
+	opacity: 0.9;
 }
 
 .userInfo {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    font-size:120%;
-    padding: 180px 400px 0px 400px;
-}
-
-.labeluser {
-    margin-right: 10px; 
-}
-
-.labelpsw {
-    margin-left:20px;
-    margin-right: 10px; 
+	margin-top: 10%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+	width: 60%;
+	/* display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	font-size: 120%; */
 }
 
 .username {
-    font-size: 15px;
+	height: 12%;
+	width: 125%;
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid rgb(207, 203, 203);
+	outline: none;
+	margin-top: 0%;
+}
+.username[type="text"] {
+	font-size: 35px;
+	color: rgb(211, 206, 206);
 }
 
 .password {
-    font-size: 15px;
+	align-content: start;
+	height: 12%;
+	width: 125%;
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid rgb(207, 203, 203);
+	outline: none;
+	margin-top: 12%;
+}
+.password[type="password"] {
+	font-size: 35px;
+	color: rgb(211, 206, 206);
 }
 
 .loginbtn {
-    margin: 20px 60px -8px 40px;
-    -webkit-animation: mymove 5s infinite;
-    animation: mymove 5s infinite;
-    color: white;
-    border-radius: 10%;
-    font-size: 20px;
-    padding: 6px 20px;
+	/* margin: 20px 60px -8px 40px; */
+	/* -webkit-animation: mymove 5s infinite;
+	animation: mymove 5s infinite;
+	color: white;
+	border-radius: 10%;
+	font-size: 20px; */
+	/* padding: 6px 20px; */
+	color: #fff;
+	text-transform: uppercase;
+	text-decoration: none;
+	background: #318b0d;
+	padding: 25px;
+	border-radius: 50px;
+	display: inline-block;
+	border: none;
+	transition: all 0.4s ease 0s;
+	width: 105%;
+	margin-top: 17%;
+	font-size: 20px;
 }
-
+.loginbtn:hover {
+	text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+	-webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+	-moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+	transition: all 0.4s ease 0s;
+}
 .link {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    margin: 100px 460px -90px 0px;
-    font-size:18px;
+	width: 65%;
+}
+.sign-up-button {
+	color: #fff;
+	text-transform: uppercase;
+	text-decoration: none;
+	background: rgb(92, 54, 22);
+	padding: 28px;
+	border-radius: 50px;
+	display: inline-block;
+	border: none;
+	transition: all 0.4s ease 0s;
+	width: 100%;
+	margin-bottom: 25%;
+	font-size: 20px;
+	/* display: flex;
+	align-items: flex-end;
+	justify-content: flex-end; */
+	/* margin: 100px 460px -90px 0px; */
+}
+.sign-up-button:hover {
+	text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+	-webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+	-moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+	transition: all 0.4s ease 0s;
 }
