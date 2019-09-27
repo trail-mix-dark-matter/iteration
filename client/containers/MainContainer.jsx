@@ -34,6 +34,7 @@ class MainContainer extends Component {
               trailData={this.props.trailData}
               getTrail={this.props.getTrail}
               displayTrail={this.props.displayTrail}
+              pressPlay={this.props.pressPlay}
             />
           </div>
           <div className='list-display'>
