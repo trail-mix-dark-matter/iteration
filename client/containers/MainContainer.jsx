@@ -40,6 +40,7 @@ class MainContainer extends Component {
             />
           </div>
           <div className='list-display'>
+            <div className="sort-feature">
             <label htmlFor='sort'>Sort By:</label>
             <select
               id='sort'
@@ -52,6 +53,7 @@ class MainContainer extends Component {
               <option value='highest-rating'>Highest Rating</option>
               <option value='lowest-rating'>Lowest Rating</option>
             </select>
+            </div>
             <ListContainer
               currentUsername={this.props.currentUsername}
               trailData={this.props.trailData}
