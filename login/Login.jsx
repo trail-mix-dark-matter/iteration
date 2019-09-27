@@ -69,7 +69,7 @@ class Login extends Component {
     } else {
       pages = (
         <div className='loginArea'>
-          <img src='../assets/trail-mix-logo-small.jpg' className='pic'></img>
+          <img src='../assets/trail-mix-logo.jpg' className='pic'></img>
 
           <form className='userInfo'>
             <label className='labeluser'> Username: </label>
