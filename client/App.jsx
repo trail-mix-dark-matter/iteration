@@ -31,8 +31,9 @@ class App extends Component {
       currentUsername: '',
       loggedOut: false,
       rerender: false,
-      latitude: 34.383966,
-      longitude: -118.537239
+      latitude: 33.9878331930883,
+      longitude: -118.47057312726974,
+      sortValue: ''
     };
     this.getTrail = this.getTrail.bind(this);
     this.noTrail = this.noTrail.bind(this);
@@ -42,6 +43,7 @@ class App extends Component {
     this.updateFavorites = this.updateFavorites.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
     this.getNewLatLon = this.getNewLatLon.bind(this);
+    this.sortTrails = this.sortTrails.bind(this);
     this.logOut = this.logOut.bind(this);
   }
 
@@ -67,7 +69,10 @@ class App extends Component {
     }
 
     function handleErrorGettingBrowserLocation() {
-      const latlon = { latitude: 34.383966, longitude: -118.537239 };
+      const latlon = {
+        latitude: 33.9878331930883,
+        longitude: -118.47057312726974
+      };
       fetch('/data', {
         method: 'POST',
         body: JSON.stringify(latlon),
@@ -99,10 +104,10 @@ class App extends Component {
       });
   }
 
-
   updateFavorites(username, trailId) {
     let method = 'POST';
-    if (this.state.favorites && this.state.favorites.includes(trailId)) method = 'DELETE';
+    if (this.state.favorites && this.state.favorites.includes(trailId))
+      method = 'DELETE';
     fetch('/favorites', {
       method,
       body: JSON.stringify({ username: username, trailid: trailId }),
@@ -110,42 +115,45 @@ class App extends Component {
         'Content-Type': 'application/json'
       }
     })
-    .then(() => this.getFavorites())
-    .catch(err => console.log(err))
+      .then(() => this.getFavorites())
+      .catch(err => console.log(err));
   }
 
   getFavorites() {
     fetch('/getfavorites', {
-      method: "POST",
-      body: JSON.stringify({username: this.state.currentUsername}),
+      method: 'POST',
+      body: JSON.stringify({ username: this.state.currentUsername }),
       headers: {
         'Content-Type': 'application/json'
       }
     })
       .then(res => res.json())
       .then(data => {
-        console.log('data is:', data)
-        this.setState({favorites : data.map(object => object.trailid)})
+        this.setState({ favorites: data.map(object => object.trailid) });
       });
   }
 
   getNewLatLon(latitude, longitude) {
-    this.setState({
-      latitude, longitude
-    }, () => {
-      fetch('/data', {
-        method: 'POST',
-        body: JSON.stringify({ latitude, longitude }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(json => {
-          this.setState({ trailData: json.trails });
+    this.setState(
+      {
+        latitude,
+        longitude
+      },
+      () => {
+        fetch('/data', {
+          method: 'POST',
+          body: JSON.stringify({ latitude, longitude }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
-        .catch(e => console.error('unable to post', e));
-    })
+          .then(res => res.json())
+          .then(json => {
+            this.setState({ trailData: json.trails });
+          })
+          .catch(e => console.error('unable to post', e));
+      }
+    );
   }
 
   //invoked by on-click function in TrailDisplay, sets selected trail in state
@@ -225,6 +233,28 @@ class App extends Component {
       });
   }
 
+  sortTrails(event) {
+    const newSortValue = event.target.value;
+    const trailDataCopy = [...this.state.trailData];
+
+    switch (newSortValue) {
+      case 'shortest-length':
+        trailDataCopy.sort((a, b) => (a.length > b.length ? 1 : -1));
+        break;
+      case 'longest-length':
+        trailDataCopy.sort((a, b) => (a.length < b.length ? 1 : -1));
+        break;
+      case 'highest-rating':
+        trailDataCopy.sort((a, b) => (a.stars < b.stars ? 1 : -1));
+        break;
+      case 'lowest-rating':
+        trailDataCopy.sort((a, b) => (a.stars > b.stars ? 1 : -1));
+        break;
+    }
+
+    this.setState({ trailData: trailDataCopy, sortValue: event.target.value });
+  }
+
   logOut() {
     fetch('/logout');
     this.setState({ loggedOut: true });
@@ -254,6 +284,8 @@ class App extends Component {
           trailData={this.state.trailData}
           latitude={this.state.latitude}
           longitude={this.state.longitude}
+          sortValue={this.state.sortValue}
+          sortTrails={this.sortTrails}
         />
         <TrailContainerModal
           trailData={this.state.trailData}
