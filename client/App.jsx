@@ -33,7 +33,8 @@ class App extends Component {
       rerender: false,
       latitude: 33.9878331930883,
       longitude: -118.47057312726974,
-      sortValue: ''
+      sortValue: '',
+      play: false
     };
     this.getTrail = this.getTrail.bind(this);
     this.noTrail = this.noTrail.bind(this);
@@ -45,6 +46,10 @@ class App extends Component {
     this.getNewLatLon = this.getNewLatLon.bind(this);
     this.sortTrails = this.sortTrails.bind(this);
     this.logOut = this.logOut.bind(this);
+    this.pressPlay = this.pressPlay.bind(this);
+    this.audio = new Audio(
+      'https://iringtone.net/rington/file?id=8454&type=sound&name=mp3'
+    );
   }
 
   //fetches data from REI API and sets to state when the page loads
@@ -63,7 +68,20 @@ class App extends Component {
       })
         .then(res => res.json())
         .then(json => {
-          this.setState({ trailData: json.trails, latitude, longitude });
+          const allTrails = json.trails;
+          allTrails.unshift({
+            id: 31,
+            name: 'Codesmith',
+            imgSqSmall:
+              'https://pbs.twimg.com/profile_images/1114213951267454978/-TuhApXW_400x400.png',
+            location: 'Venice, California',
+            latitude: 33.9878331930883,
+            longitude: -118.47057312726974,
+            difficulty: 'black',
+            length: 3.1,
+            stars: 4.8
+          });
+          this.setState({ trailData: allTrails, latitude, longitude });
         })
         .catch(e => console.error('unable to post', e));
     }
@@ -163,7 +181,9 @@ class App extends Component {
       if (trailsArr[i].id === +id) {
         this.setState({
           selectedTrail: trailsArr[i],
-          displayTrailModal: true
+          displayTrailModal: true,
+          latitude: trailsArr[i].latitude,
+          longitude: trailsArr[i].longitude
         });
       }
     }
@@ -198,7 +218,7 @@ class App extends Component {
   displayTrail(selectedHike) {
     this.setState({
       selectedTrail: selectedHike,
-      displayTrailModal: true
+      displayTrailModal: true,
     });
   }
   //toggle that is invoked when clicking on the "difficulty" in the list items
@@ -233,6 +253,7 @@ class App extends Component {
       });
   }
 
+  // sort trails
   sortTrails(event) {
     const newSortValue = event.target.value;
     const trailDataCopy = [...this.state.trailData];
@@ -255,9 +276,16 @@ class App extends Component {
     this.setState({ trailData: trailDataCopy, sortValue: event.target.value });
   }
 
+  // log out
   logOut() {
     fetch('/logout');
     this.setState({ loggedOut: true });
+  }
+
+  // play audio
+  pressPlay() {
+    this.setState({ play: true });
+    this.audio.play();
   }
 
   //renders MainContainer and conditionally renders TrailContainer
@@ -267,7 +295,9 @@ class App extends Component {
     }
     return (
       <div className='appContainer'>
+        <div className="nav-bar">
         <NavContainer logOut={this.logOut} />
+        </div>
         <MainContainer
           noTrail={this.noTrail}
           className='mainContainer'
@@ -286,6 +316,7 @@ class App extends Component {
           longitude={this.state.longitude}
           sortValue={this.state.sortValue}
           sortTrails={this.sortTrails}
+          pressPlay={this.pressPlay}
         />
         <TrailContainerModal
           trailData={this.state.trailData}

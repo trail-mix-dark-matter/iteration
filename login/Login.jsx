@@ -25,16 +25,16 @@ class Login extends Component {
     this.updateData = this.updateData.bind(this);
   }
   componentDidMount() {
-    // fetch('/gettingUser')
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     if (data !== 'nothing') {
-    //       console.log('hi');
-    //       this.setState({ isLoggedIn: true });
-    //     }
-    //   });
+    fetch('/gettingUser')
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        if (data !== 'nothing') {
+          console.log('hi');
+          this.setState({ isLoggedIn: true });
+        }
+      });
   }
 
   // post request, get the data from user input, then make a post request with the user input to check match with database
@@ -69,10 +69,10 @@ class Login extends Component {
     } else {
       pages = (
         <div className='loginArea'>
-          <img src='../assets/trail-mix-logo.jpg' className='pic'></img>
+          <img src='../assets/trail-mix-logo.png' className='pic'></img>
 
           <form className='userInfo'>
-            <label className='labeluser'> Username: </label>
+            <label className='labeluser'> </label>
             <input
               className='username'
               type='text'
@@ -82,7 +82,7 @@ class Login extends Component {
               }}
             ></input>
             <br />
-            <label className='labelpsw'> Password: </label>
+            <label className='labelpsw'> </label>
             <input
               className='password'
               type='password'
@@ -103,12 +103,14 @@ class Login extends Component {
             </button>
           </form>
           <div className='link'>
-            <Link to='./signup'>SIGNUP</Link>
+            <Link to='./signup'>
+              <button className='sign-up-button'>Sign up</button>
+            </Link>
           </div>
         </div>
       );
     }
-    return <div>{pages}</div>;
+    return <div className='back'>{pages}</div>;
   }
 }
 

@@ -43,8 +43,8 @@ const deleteFavorite = (req, res, next) => {
   pool.query(query, queryArray, error => {
     if (error) return next(error);
     return next();
-  })
-}
+  });
+};
 
 // query fetching all comments for specific trails
 const getComment = (req, res, next) => {
@@ -161,6 +161,10 @@ const createSession = (req, res, next) => {
 // add session
 const addSession = (req, res, next) => {
   const username = req.body.username;
+  console.log('req.cookies', req.cookies.session);
+  console.log('req.body: ', req.body);
+  console.log('username: ', username);
+
   const queryGetCookie = `SELECT cookie FROM sessions WHERE username = $1`;
   const queryArray = [username];
 

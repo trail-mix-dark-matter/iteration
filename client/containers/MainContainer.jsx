@@ -25,7 +25,7 @@ class MainContainer extends Component {
           }
         }}
       >
-        <img src='../../assets/trail-mix-logo.jpg' className='logo' />
+        <img src='../../assets/trail-mix-logo.png' className='logo' />
         <br />
         <div className='map-and-list'>
           <div className='map-display-width'>
@@ -36,21 +36,24 @@ class MainContainer extends Component {
               latitude={this.props.latitude}
               longitude={this.props.longitude}
               getNewLatLon={this.props.getNewLatLon}
+              pressPlay={this.props.pressPlay}
             />
           </div>
           <div className='list-display'>
-            <label htmlFor='sort'>Sort By:</label>
-            <select
-              id='sort'
-              value={this.props.sortValue}
-              onChange={this.props.sortTrails}
-            >
-              <option value=''>None</option>
-              <option value='shortest-length'>Shortest Length</option>
-              <option value='longest-length'>Longest Length</option>
-              <option value='highest-rating'>Highest Rating</option>
-              <option value='lowest-rating'>Lowest Rating</option>
-            </select>
+            <div className='sort-feature'>
+              <label htmlFor='sort'>Sort By:</label>
+              <select
+                id='sort'
+                value={this.props.sortValue}
+                onChange={this.props.sortTrails}
+              >
+                <option value=''>None</option>
+                <option value='shortest-length'>Shortest Length</option>
+                <option value='longest-length'>Longest Length</option>
+                <option value='highest-rating'>Highest Rating</option>
+                <option value='lowest-rating'>Lowest Rating</option>
+              </select>
+            </div>
             <ListContainer
               currentUsername={this.props.currentUsername}
               trailData={this.props.trailData}
